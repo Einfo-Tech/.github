@@ -63,4 +63,4 @@ jobs:
               core.setFailed(`WeCom webhook error: ${result.errmsg}`);
             }
         env:
-          WECOM_WEBHOOK: ${{ secrets.WECOM_WEBHOOK }}
+          WECOM_WEBHOOK: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=27616b03-a67b-4191-ae2e-95067df61a69"
