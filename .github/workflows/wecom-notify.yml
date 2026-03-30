@@ -1,0 +1,66 @@
+name: WeCom Notify (Reusable)
+
+on:
+  workflow_call:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send WeCom notification
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const webhook = process.env.WECOM_WEBHOOK;
+            const event = context.eventName;
+            const payload = context.payload;
+            let text = '';
+
+            if (event === 'push') {
+              const branch = payload.ref ? payload.ref.replace('refs/heads/', '') : '';
+              if (!branch) return; // skip tag pushes etc
+              const repo = payload.repository.name;
+              const pusher = payload.pusher ? payload.pusher.name : 'unknown';
+              const commitList = (payload.commits || [])
+                .slice(0, 5)
+                .map(c => `• ${c.message.split('\n')[0]} (${c.author.name})`)
+                .join('\n');
+              const more = payload.commits && payload.commits.length > 5
+                ? `\n...以及另外 ${payload.commits.length - 5} 个提交` : '';
+              text = `📦 **Push** [\`${repo}\`](${payload.repository.html_url}) / \`${branch}\`\n推送人：${pusher}\n${commitList}${more}`;
+
+            } else if (event === 'delete') {
+              const repo = payload.repository.name;
+              const refType = payload.ref_type === 'branch' ? '分支' : 'Tag';
+              text = `🗑️ **删除${refType}** \`${payload.ref}\`\n仓库：[\`${repo}\`](${payload.repository.html_url})`;
+
+            } else if (event === 'pull_request') {
+              const pr = payload.pull_request;
+              const action = payload.action;
+              const repo = payload.repository.name;
+              if (action === 'closed' && pr.merged) {
+                text = `✅ **PR 已合并** [${repo}#${pr.number}](${pr.html_url})\n${pr.title}\n合并人：${pr.merged_by ? pr.merged_by.login : 'unknown'}`;
+              } else if (action === 'opened') {
+                text = `🔀 **新 PR** [${repo}#${pr.number}](${pr.html_url})\n${pr.title}\n作者：${pr.user.login}`;
+              } else if (action === 'closed' && !pr.merged) {
+                text = `❌ **PR 已关闭（未合并）** [${repo}#${pr.number}](${pr.html_url})\n${pr.title}`;
+              }
+            }
+
+            if (!text) {
+              console.log(`Event: ${event}, action: ${payload.action || 'n/a'} — skipped`);
+              return;
+            }
+
+            const resp = await fetch(webhook, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ msgtype: 'markdown', markdown: { content: text } })
+            });
+            const result = await resp.json();
+            console.log('WeCom response:', JSON.stringify(result));
+            if (result.errcode !== 0) {
+              core.setFailed(`WeCom webhook error: ${result.errmsg}`);
+            }
+        env:
+          WECOM_WEBHOOK: ${{ secrets.WECOM_WEBHOOK }}
