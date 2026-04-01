@@ -1,12 +1,23 @@
-## Hi there 👋
+# EinfoTech 易捷讯
 
-<!--
+易捷讯 · 全球领先ERP Odoo服务商，定制专家
 
-**Here are some ideas to get you started:**
+### 公司简介
 
-🙋‍♀️ A short introduction - what is your organization all about?
-🌈 Contribution guidelines - how can the community get involved?
-👩‍💻 Useful resources - where can the community find your docs? Is there anything else the community should know?
-🍿 Fun facts - what does your team eat for breakfast?
-🧙 Remember, you can do mighty things with the power of [Markdown](https://docs.github.com/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
--->
+易捷讯集团是Odoo的银牌合作伙伴，凭借Odoo ERP的先进平台和卓越的开源生态，致力于为成长型企业提供卓越的一站式解决方案和全面的管理平台。
+
+我们的核心业务涵盖软件定制服务（包括 CRM 管理、销售管理、采购管理、库存管理、项目管理、财务管理、费控预算管理、电商平台、门户网站等）、文件管理（文件协作与安全管理、文件档案管理）、数据库云化管理平台（数据库连续性备份）。
+
+易捷讯还拥有合规易和合众远两家分公司，并在海外设有分支机构，为您提供全球化的支持和服务。
+
+### 愿景和使命
+
+成为成长型企业的最佳合作伙伴
+
+以 Odoo ERP 为核心平台，结合开源生态和云计算技术，为客户提供定制化的软件服务、文件管理、数据库云化管理平台等，满足客户在不同领域和场景的管理需求。
+
+---
+## 联系我们
+
+- 邮箱：sales@einfo-tech.com  
+- 电话：+86 (0755) 28282314  
