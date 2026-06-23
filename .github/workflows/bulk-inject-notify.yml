@@ -13,20 +13,23 @@ jobs:
           github-token: ${{ secrets.ORG_ADMIN_TOKEN }}
           script: |
             const owner = 'Einfo-Tech';
-            const notifyContent = Buffer.from(`name: Notify WeCom
-
-on:
-  push:
-    branches: ['**']
-  delete:
-  pull_request:
-    types: [opened, closed]
-
-jobs:
-  notify:
-    uses: Einfo-Tech/.github/.github/workflows/wecom-notify.yml@main
-    secrets: inherit
-`).toString('base64');
+            const workflowText = [
+              'name: Notify WeCom',
+              '',
+              'on:',
+              '  push:',
+              "    branches: ['**']",
+              '  delete:',
+              '  pull_request:',
+              '    types: [opened, closed]',
+              '',
+              'jobs:',
+              '  notify:',
+              '    uses: Einfo-Tech/.github/.github/workflows/wecom-notify.yml@main',
+              '    secrets: inherit',
+              '',
+            ].join('\n');
+            const notifyContent = Buffer.from(workflowText, 'utf8').toString('base64');
 
             // Get all repos in org
             const repos = await github.paginate(github.rest.repos.listForOrg, {

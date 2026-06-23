@@ -26,4 +26,4 @@ jobs:
     secrets: inherit
 ```
 
-无需在各仓库单独配置 Secret，组织级 `WECOM_WEBHOOK` 自动继承。
+无需在各仓库单独配置 Secret，通知逻辑由本仓库的 reusable workflow 统一维护。
