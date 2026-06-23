@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send WeCom notification
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const webhook = process.env.WECOM_WEBHOOK;
